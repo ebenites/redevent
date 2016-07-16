@@ -12,11 +12,20 @@
 */
 
 $app->get('/', function () use ($app) {
-    return $app->version();
+    //return $app->version();
+    return redirect('/api/documentation');
 });
 
 $app->get('/api/topics', 'TopicController@topics');
 
 $app->get('/api/events', 'EventController@events');
 
-$app->get('/api/user/{email}', 'UserController@user');
+$app->post('/api/login', 'UserController@login');
+
+$app->post('/api/users', 'UserController@register');
+
+$app->get('/api/users/{id}', 'UserController@user');
+
+$app->get('/api/users/{id}/topics', 'UserController@topics');
+
+$app->get('/api/users/{id}/events', 'UserController@events');

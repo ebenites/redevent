@@ -1,0 +1,173 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "RedEvent API",
+        "description": "Servicio RestFul para el aplicativo m\u00f3vil RedEvent.",
+        "contact": {
+            "email": "erick.benites@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "host": "eventos-ebenites.c9users.io",
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/api/events": {
+            "get": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "List events",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "A list with events"
+                    }
+                }
+            }
+        },
+        "/api/topics": {
+            "get": {
+                "tags": [
+                    "Topics"
+                ],
+                "summary": "List topics",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "A list with topics"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A user info"
+                    },
+                    "401": {
+                        "description": "Username and/or Password Invalid"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Register",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A user info"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user by id",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A user info"
+                    },
+                    "404": {
+                        "description": "Record not found"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}/topics": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "List topics by user id",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list with topics by user id"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}/events": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "List events by user id",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list with events by user id"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+
+    }
+}

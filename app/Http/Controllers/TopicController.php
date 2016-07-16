@@ -1,16 +1,21 @@
 <?php
 namespace App\Http\Controllers;
 
-//use App\User;
 use DB;
 
 class TopicController extends Controller
 {
     /**
-     * Retrieve the topics list
-     *
-     * @param  int  $id
-     * @return Response
+     * @SWG\Get(
+     *  path="/api/topics",
+     *  tags={"Topics"},
+     *  summary="List topics",
+     *  description="",
+     *  @SWG\Response(
+     *      response=200,
+     *      description="A list with topics"
+     *  ),
+     * )
      */
     public function topics()
     {
