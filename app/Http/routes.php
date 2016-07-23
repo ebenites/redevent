@@ -11,6 +11,31 @@
 |
 */
 
+/**
+ * 
+ * https://github.com/DarkaOnLine/SwaggerLume   (Solo soporta HTTP y no HTTPS)
+ * Cada cambio en los tags correr: php artisan swagger-lume:generate 
+ * Example: https://github.com/zircote/swagger-php/blob/master/Examples/petstore.swagger.io/controllers/PetController.php
+ * Example running: http://petstore.swagger.io/
+ * Specification: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
+ * 
+ * /
+
+/**
+ * @SWG\Swagger(
+ *     schemes={"http"},
+ *     host="eventos-ebenites.c9users.io",
+ *     basePath="/",
+ *     @SWG\Info(
+ *         version="1.0.0",
+ *         title="RedEvent API",
+ *         description="Servicio RestFul para el aplicativo móvil RedEvent.",
+ *         @SWG\Contact(
+ *             email="erick.benites@gmail.com"
+ *         )
+ *     )
+ * )
+ */
 $app->get('/', function () use ($app) {
     //return $app->version();
     return redirect('/api/documentation');

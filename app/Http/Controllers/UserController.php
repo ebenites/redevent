@@ -5,12 +5,6 @@ use DB;
 use Illuminate\Http\Request;
 //use App\User;
 
-// https://github.com/DarkaOnLine/SwaggerLume   (Solo soporta HTTP y no HTTPS)
-// Cada cambio en los tags correr: php artisan swagger-lume:generate
-// Example: https://github.com/zircote/swagger-php/blob/master/Examples/petstore.swagger.io/controllers/PetController.php
-// Example running: http://petstore.swagger.io/
-// Specification: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
-
 class UserController extends Controller
 {
     
