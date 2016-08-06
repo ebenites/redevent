@@ -36,16 +36,22 @@
  *     )
  * )
  */
+ 
 $app->get('/', function () use ($app) {
     //return $app->version();
     return redirect('/api/documentation');
 });
 
+/**
+ *  UserController 
+ */
+ 
+$app->post('/api/login', 'UserController@login');
+
+//$app->get('/api/topics', ['middleware' => 'auth', 'uses' => 'TopicController@topics']); // Mejor usar "public function __construct(){ $this->middleware('auth'); }" en el controlador
 $app->get('/api/topics', 'TopicController@topics');
 
 $app->get('/api/events', 'EventController@events');
-
-$app->post('/api/login', 'UserController@login');
 
 $app->post('/api/users', 'UserController@register');
 

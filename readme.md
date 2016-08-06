@@ -12,3 +12,13 @@ Proyecto desarrollado bajo el framework Laravel Lumen para el aplicativo móvil 
 ### License
 
 The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+
+
+### Pendientes
+
+* Crear eventos (WEB)
+* URL Imagen del poster del eventos (Todos)
+* Registro del usuario al evento (Manuel)
+* Checking del evento (Mario)
+* Rating del evento (Mario)
+* 
