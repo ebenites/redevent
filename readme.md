@@ -17,8 +17,8 @@ The Lumen framework is open-sourced software licensed under the [MIT license](ht
 ### Pendientes
 
 * Crear eventos (WEB)
-* URL Imagen del poster del eventos (Todos)
-* Registro del usuario al evento (Manuel)
-* Checking del evento (Mario)
-* Rating del evento (Mario)
+* URL Imagen del poster del eventos (Todos) - Listo
+* Registro del usuario al evento (Manuel) - Listo
+* Checking del evento (Mario) - Listo
+* Rating del evento (Mario) - Listo
 * 

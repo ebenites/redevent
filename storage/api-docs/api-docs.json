@@ -47,7 +47,7 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "Login",
+                "summary": "Login or Register",
                 "description": "",
                 "parameters": [
                     {
@@ -68,7 +68,50 @@
                         "description": "A user info"
                     },
                     "401": {
-                        "description": "Username and/or Password Invalid"
+                        "description": "Password Invalid or Blocked account"
+                    }
+                }
+            }
+        },
+        "/api/glogin": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login or Register with Google",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "googleid",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fullname",
+                        "in": "formData",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "photo",
+                        "in": "formData",
+                        "required": false,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A user info"
+                    },
+                    "401": {
+                        "description": "GoogleID Invalid or Blocked account"
                     }
                 }
             }
@@ -78,7 +121,7 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "Register",
+                "summary": "Update user profile",
                 "description": "",
                 "parameters": [
                     {
@@ -92,7 +135,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A user info"
+                        "description": "Success message"
                     }
                 }
             }
@@ -162,6 +205,88 @@
                 "responses": {
                     "200": {
                         "description": "A list with events by user id"
+                    }
+                }
+            }
+        },
+        "/api/users/{userid}/events/{eventid}": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Checking into envent",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "userid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "eventid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Register into envent",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "userid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "eventid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message"
+                    }
+                }
+            }
+        },
+        "/api/users/{userid}/events/{eventid}/{rating}": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Rating envent",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "userid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "eventid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message"
                     }
                 }
             }

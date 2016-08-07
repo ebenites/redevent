@@ -48,14 +48,24 @@ $app->get('/', function () use ($app) {
  
 $app->post('/api/login', 'UserController@login');
 
+$app->post('/api/glogin', 'UserController@login_with_google');
+
+
+$app->post('/api/users/{userid}/events/{eventid}', 'UserController@attendant');
+
+$app->put('/api/users/{userid}/events/{eventid}', 'UserController@checking');
+
+$app->put('/api/users/{userid}/events/{eventid}/{rating}', 'UserController@rating');
+
+
+$app->get('/api/users/{id}', 'UserController@user');
+
+$app->put('/api/users/{id}', 'UserController@update');
+
 //$app->get('/api/topics', ['middleware' => 'auth', 'uses' => 'TopicController@topics']); // Mejor usar "public function __construct(){ $this->middleware('auth'); }" en el controlador
 $app->get('/api/topics', 'TopicController@topics');
 
 $app->get('/api/events', 'EventController@events');
-
-$app->post('/api/users', 'UserController@register');
-
-$app->get('/api/users/{id}', 'UserController@user');
 
 $app->get('/api/users/{id}/topics', 'UserController@topics');
 
