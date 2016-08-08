@@ -6,10 +6,10 @@ use DB;
 class TopicController extends Controller
 {
     
-    public function __construct()
+    /*public function __construct()
     {
         $this->middleware('auth');
-    }
+    }*/
     
     /**
      * @SWG\Get(
@@ -26,6 +26,9 @@ class TopicController extends Controller
     public function topics()
     {
         $list = DB::select("SELECT * FROM topics");
+        foreach($list as $topic){
+            $topic->image = '/uploads/images/topics/'.$topic->id.'.png';
+        }                            
         return response()->json($list);
     }
 }

@@ -156,6 +156,12 @@ class UserController extends Controller
      *  ),
      *  @SWG\Parameter(
      *      in="formData",
+     *      name="token",
+     *      required=true,
+     *      type="string"
+     *  ),
+     *  @SWG\Parameter(
+     *      in="formData",
      *      name="googleid",
      *      required=true,
      *      type="string"
@@ -187,6 +193,7 @@ class UserController extends Controller
         try{
             
             $email = $request->input('email');
+            $token = $request->input('token');
             $googleid = $request->input('googleid');
             $fullname = $request->input('fullname');
             
@@ -196,6 +203,7 @@ class UserController extends Controller
             
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
+                'token' => 'required',
                 'googleid' => 'required',
             ]);
             
@@ -204,7 +212,7 @@ class UserController extends Controller
                 return response()->json(['message' => $validator->getMessageBag()->first(), 'status' => 400], 400);
             }
             
-            // Validar googleid con Google API (pendiente) ...
+            // Validar $token con Google API y jalar los datos del usuaio y ya no envairlos del android (pendiente) ...
             
             // Verificar existencia
             $result = DB::select("SELECT id, email, password, googleid, status FROM users WHERE email=?", [$email]); 
@@ -299,6 +307,49 @@ class UserController extends Controller
             DB::rollBack();
             return response()->json(['message' => $e->getMessage(), 'status' => 500], 500);
         }
+    }
+
+        /**
+     * @SWG\Post(
+     *  path="/api/users/{id}/topics",
+     *  tags={"Users"},
+     *  summary="Update topics preferences",
+     *  description="",
+     *  @SWG\Parameter(
+     *      in="path",
+     *      name="id",
+     *      required=true,
+     *      type="integer"
+     *  ),
+     *  @SWG\Parameter(
+     *      in="body",
+     *      name="body",
+     *      required=true,
+     *      @SWG\Schema()
+     *  ),
+     *  @SWG\Response(
+     *      response=200,
+     *      description="Success message"
+     *  ),
+     * )
+     */
+    public function update_topics(Request $request, $id) 
+    {
+        
+        // $data = (object) $request->json()->all();
+        $topics_id = $request->json()->all();
+        
+        DB::beginTransaction();
+        
+        DB::delete('delete from preferences where users_id=?', [$id]);
+        
+        foreach ($topics_id as $topic_id){
+            DB::insert('insert into preferences (users_id, topics_id) values (?, ?)', [$id, $topic_id]);
+        }
+        
+        DB::commit();
+        
+        return response()->json(['message' => 'Preferences saved!'], 200);
     }
 
     /**
@@ -419,11 +470,50 @@ class UserController extends Controller
      */
     public function events($id)
     {
-        $list = DB::select("SELECT e.*, (select count(*) from attendants where users_id=1 and events_id=e.id) as registered FROM topics t
-                            INNER JOIN `events` e ON e.topics_id=t.id
+        $list = DB::select("SELECT e.*, (select count(*) from attendants where users_id=p.users_id and events_id=e.id) as registered FROM topics t
+                            INNER JOIN events e ON e.topics_id=t.id
                             INNER JOIN preferences p ON p.topics_id=t.id
-                            INNER JOIN users u ON u.id=p.users_id
-                            WHERE u.id=?",  [$id]);
+                            WHERE (e.enddate IS NULL AND e.startdate IS NULL) OR (e.enddate IS NOT NULL AND e.enddate > NOW()) OR (e.startdate IS NOT NULL AND e.startdate > NOW()) AND p.users_id=?",  [$id]);
+                            
+        foreach($list as $event){
+            $topics = DB::select("SELECT * FROM topics WHERE id=?", [$event->topics_id]);
+            $event->topics = $topics[0];
+            unset($event->topics_id);
+            $event->image = '/uploads/images/events/'.$event->filename;
+            
+            $attendants = DB::select("SELECT * FROM attendants WHERE users_id=? AND events_id=?", [$id, $event->id]);
+            if(count($attendants)!=0){
+                $event->attendant = $attendants[0];
+            }
+        }                            
+                            
+        return response()->json($list);
+    }
+    
+    /**
+     * @SWG\Get(
+     *  path="/api/users/{id}/myevents",
+     *  tags={"Users"},
+     *  summary="List events registered",
+     *  description="",
+     *  @SWG\Parameter(
+     *      in="path",
+     *      name="id",
+     *      required=true,
+     *      type="string"
+     *  ),
+     *  @SWG\Response(
+     *      response=200,
+     *      description="A list with events by user id"
+     *  ),
+     * )
+     */
+    public function myevents($id)
+    {
+        $list = DB::select("SELECT e.* FROM topics t
+                            INNER JOIN events e ON e.topics_id=t.id
+                            INNER JOIN attendants a ON a.events_id=e.id
+                            WHERE a.users_id=?",  [$id]);
                             
         foreach($list as $event){
             $topics = DB::select("SELECT * FROM topics WHERE id=?", [$event->topics_id]);

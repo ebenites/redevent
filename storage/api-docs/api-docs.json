@@ -88,6 +88,12 @@
                         "type": "string"
                     },
                     {
+                        "name": "token",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "name": "googleid",
                         "in": "formData",
                         "required": true,
@@ -112,6 +118,56 @@
                     },
                     "401": {
                         "description": "GoogleID Invalid or Blocked account"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}/topics": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "List topics by user id",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list with topics by user id"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update topics preferences",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message"
                     }
                 }
             }
@@ -165,12 +221,12 @@
                 }
             }
         },
-        "/api/users/{id}/topics": {
+        "/api/users/{id}/events": {
             "get": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "List topics by user id",
+                "summary": "List events by user id",
                 "description": "",
                 "parameters": [
                     {
@@ -182,17 +238,17 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A list with topics by user id"
+                        "description": "A list with events by user id"
                     }
                 }
             }
         },
-        "/api/users/{id}/events": {
+        "/api/users/{id}/myevents": {
             "get": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "List events by user id",
+                "summary": "List events registered",
                 "description": "",
                 "parameters": [
                     {
