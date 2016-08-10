@@ -122,6 +122,34 @@
                 }
             }
         },
+        "/api/users/{id}/photo": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Upload user photo profile",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "photo",
+                        "in": "formData",
+                        "required": false,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message"
+                    }
+                }
+            }
+        },
         "/api/users/{id}/topics": {
             "get": {
                 "tags": [

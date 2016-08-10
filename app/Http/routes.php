@@ -59,6 +59,8 @@ $app->post('/api/glogin', 'UserController@login_with_google');
 
 $app->post('/api/users/{id}/topics', 'UserController@update_topics');
 
+$app->post('/api/users/{id}/photo', 'UserController@upload_photo');
+
 $app->get('/api/users/{id}/events', 'UserController@events');
 
 $app->get('/api/users/{id}/myevents', 'UserController@myevents');

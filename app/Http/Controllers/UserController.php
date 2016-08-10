@@ -142,7 +142,7 @@ class UserController extends Controller
         }
     }
     
-        /**
+    /**
      * @SWG\Post(
      *  path="/api/glogin",
      *  tags={"Users"},
@@ -309,7 +309,48 @@ class UserController extends Controller
         }
     }
 
-        /**
+    /**
+     * @SWG\Post(
+     *  path="/api/users/{id}/photo",
+     *  tags={"Users"},
+     *  summary="Upload user photo profile",
+     *  description="",
+     *  @SWG\Parameter(
+     *      in="path",
+     *      name="id",
+     *      required=true,
+     *      type="integer"
+     *  ),
+     *  @SWG\Parameter(
+     *      in="formData",
+     *      name="photo",
+     *      required=false,
+     *      type="file"
+     *  ),
+     *  @SWG\Response(
+     *      response=200,
+     *      description="Success message"
+     *  )
+     * )
+     */
+    public function upload_photo(Request $request, $id) 
+    {
+        try{
+            
+            if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+                $photo = $request->file('photo');
+                DB::update('UPDATE users SET file=?, filetype=?, filesize=? where id=?', [file_get_contents($photo->getPathname()), $photo->getMimeType(), $photo->getSize(), $id]);
+            }
+                
+            return response()->json(['message' => 'Photo uploaded!'], 200);
+                
+        }catch(Exception $e){
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage(), 'status' => 500], 500);
+        }
+    }
+
+    /**
      * @SWG\Post(
      *  path="/api/users/{id}/topics",
      *  tags={"Users"},
